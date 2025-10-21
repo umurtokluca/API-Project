@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon API</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+    <h1>My Pokemon Team</h1>
+
+    <div>
+        <form action="/add" method="POST">
+            <select name="pokemon" id="pokemonSelect">
+                <% if (names.length > 0) { %>
+                    <% names.forEach(function(name) { %>
+                    <option value="<%= name %>"><%= name %></option>
+                    <% }) %>
+                <% } else { %>
+                    <option disabled>No names available</option>
+                <% } %>
+            </select>
+            <button type="Submit">Add Pokemon</button>
+        </form>
+    </div>
+    
+    <div >
+        <div>
+            <%= name %>
+        </div>
+        <div>
+            <div>
+                <%= type %>
+            </div>
+            <div>
+                <% if (type2) { %> / <%= type2 %> <% } %>
+            </div>
+        </div>
+        <div>
+            <img src="<%= sprite %>" alt="<%= name %>">
+        </div>
+    </div>
+</body>
+</html>

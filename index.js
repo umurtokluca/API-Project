@@ -5,37 +5,48 @@ const app = express();
 const port = 3000;
 
 app.use(express.static("public"));
+app.set("view engine", "ejs");
+app.use(express.urlencoded({ extended: true })); // for POST form data
 
-// app.get("/", async (req, res) => {
-//     try {
-//     const result = await axios.get("https://pokeapi.co/api/v2/pokemon/charizard");
-//         res.render("index.ejs", {
-//         name: result.data.name,
-//         type: result.data.types[0].type.name,
-//         type2: result?.data?.types?.[1]?.type?.name || '',
-//         sprite: result.data.sprites.front_default,
-//     });
-//     }
-//         catch (error) {
-//         console.log(error.response.data);
-//         res.status(500);
-//     }
-// });
+let cards = []; // store up to 6 Pokémon
 
+// --- Main route ---
 app.get("/", async (req, res) => {
+  const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=200");
+  const names = result.data.results.map(p => p.name);
+  res.render("index", { names, cards });
+});
+
+// --- Fetch Pokémon and show it ---
+app.post("/add", async (req, res) => {
+  const name = req.body.pokemon;
+
+  if (!name) return res.redirect("/");
+
+  // Limit to 6
+  if (cards.length >= 6) return res.redirect("/");
+
   try {
-    const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=10");
+    const result = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const data = result.data;
 
-    // Extract names
-    const names = result?.data?.results?.map(item => item.name) || [];
+    const type1 = data.types[0]?.type?.name || "";
+    const type2 = data.types[1]?.type?.name || "";
+    const sprite = data.sprites?.front_default || "";
 
-    res.render("index.ejs", { names });
-  } catch (error) {
-    res.status(500).send("Error fetching data: " + error.message);
+    const newCard = { name: data.name, type: type1, type2, sprite };
+    cards.push(newCard);
+  } catch (err) {
+    console.error("Error fetching Pokémon:", err.message);
   }
+
+  res.redirect("/");
 });
 
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}/`);
+// --- Clear cards (optional reset route) ---
+app.post("/clear", (req, res) => {
+  cards = [];
+  res.redirect("/");
 });
+
+app.listen(3000, () => console.log("Server running at http://localhost:3000"));

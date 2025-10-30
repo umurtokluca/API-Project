@@ -8,29 +8,10 @@
 * {margin: 0;font-family: Fira Sans Condensed;}
 body {background-color: #121212;color: #fff;height: 100vh;}
 
-.container {width: 80%;margin: 0 auto;text-align: center;}
-
-.pokemon-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1%;
-    margin-top: 20px;
-}
-.pokemon-card {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    padding: 10px;
-    width: 15.8%;
-    text-align: center;
-    background-color: #f8f8f8;
-    color: #000;
-}
-.pokemon-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-.pokemon-card img {
-    width: 96px;
-    height: 96px;
-}
+.container {width: 80%;margin: 0 auto;text-align: center;padding-top: 2rem;}
+.title {font-size: 3rem;margin-bottom: 2rem;font-weight: 600;}
+.buttons {margin-bottom: 4rem;}
+.pokemon-container {display: flex;flex-wrap: wrap;gap: 1%;margin-top: 20px;}
+.pokemon-card {border: 1px solid #ccc;border-radius: 20px;padding-top: 1.2rem;width: 15.8%;text-align: center;background-color: #f8f8f8;color: #000;}
+.pokemon-card h2 {font-size: 1.5rem;margin-bottom: .5rem;font-weight: 600;}
+.pokemon-card img {width: 120px;height: 120px;}

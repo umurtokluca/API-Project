@@ -12,7 +12,7 @@ let cards = []; // store up to 6 Pokémon
 
 // --- Main route ---
 app.get("/", async (req, res) => {
-  const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=200");
+  const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=494");
   const names = result.data.results.map(p => p.name);
   res.render("index", { names, cards });
 });
@@ -46,6 +46,16 @@ app.post("/add", async (req, res) => {
 // --- Clear cards (optional reset route) ---
 app.post("/clear", (req, res) => {
   cards = [];
+  res.redirect("/");
+});
+
+app.post("/clear-self", (req, res) => {
+  const index = parseInt(req.body.index);
+
+  if (!isNaN(index) && index >= 0 && index < cards.length) {
+    cards.splice(index, 1); // remove only that card
+  }
+
   res.redirect("/");
 });
 

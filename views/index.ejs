@@ -15,34 +15,41 @@
                 <select name="pokemon" id="pokemonSelect">
                 <% if (names.length > 0) { %>
                     <% names.forEach(function(name) { %>
-                    <option value="<%= name %>"><%= name %></option>
+                    <option value="<%= capitalise(name) %>"><%= capitalise(name) %></option>
                     <% }) %>
                 <% } else { %>
                     <option disabled>No names available</option>
                 <% } %>
                 </select>
-                <button type="submit">Add Pokemon</button>
+                <button class="btn-submit" type="submit">Add Pokemon</button>
             </form>
 
             <form action="/clear" method="POST" style="margin-top: 10px;">
-                <button type="submit">Clear All</button>
+                <button class="btn-delete" type="submit">Clear All</button>
             </form>
         </div>
 
+        <%function capitalise(text) {return text ? text.charAt(0).toUpperCase() + text.slice(1) : '';}%>
+
         <div class="pokemon-container">
-            <% cards.forEach(function(card) { %>
+            <% cards.forEach(function(card, index) { %>
                 <div class="pokemon-card">
-                    <h2><%= card.name %></h2>
-                    <div><%= card.type %><% if (card.type2) { %> / <%= card.type2 %> <% } %></div>
+                    <h2><%= capitalise(card.name) %></h2>
+                    <div>
+                        <div class="type type-<%= card.type %>"><%= capitalise(card.type) %></div>
+                        <% if (card.type2) { %> 
+                            <div class="type type-<%= card.type2 %>"><%= capitalise(card.type2) %></div> 
+                        <% } %>
+                    </div>
                     <div>
                         <img src="<%= card.sprite %>" alt="<%= card.name %>">
                     </div>
                     <form action="/clear-self" method="POST" style="margin-top: 10px;">
-                        <button type="submit">Delete</button>
+                        <input type="hidden" name="index" value="<%= index %>">
+                        <button class="btn-delete" type="submit">X</button>
                     </form>
                 </div>
             <% }) %>
         </div>
-    </div>
 </body>
 </html>

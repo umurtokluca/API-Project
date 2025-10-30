@@ -7,11 +7,41 @@
 *, *::before, *::after {box-sizing: border-box;} 
 * {margin: 0;font-family: Fira Sans Condensed;}
 body {background-color: #121212;color: #fff;height: 100vh;}
+input[type="submit"], button {border: none;}
+
+select {line-height: 2rem;height: 2rem;border-radius: 5px;border: none;}
+
+.btn-submit, .btn-delete, .btn-edit {line-height: 2rem;padding: 0 10px;color: #fff;cursor: pointer;border-radius: 5px;font-size: .8rem;}
+.btn-delete {background: #CB0404;}
+.btn-edit {background: #F4631E;}
+.btn-submit {background: #12971f;}
+.pokemon-card .btn-delete {position: absolute;top: 7px;right: 15px;background: none;color: #000;font-size: 20px;font-weight: 400;line-height: normal;padding: 0;}
+
 
 .container {width: 80%;margin: 0 auto;text-align: center;padding-top: 2rem;}
 .title {font-size: 3rem;margin-bottom: 2rem;font-weight: 600;}
 .buttons {margin-bottom: 4rem;}
 .pokemon-container {display: flex;flex-wrap: wrap;gap: 1%;margin-top: 20px;}
-.pokemon-card {border: 1px solid #ccc;border-radius: 20px;padding-top: 1.2rem;width: 15.8%;text-align: center;background-color: #f8f8f8;color: #000;}
+.pokemon-card {border: 1px solid #ccc;border-radius: 20px;padding-top: 1.2rem;width: 15.8%;text-align: center;background-color: #f8f8f8;color: #000;position: relative;}
 .pokemon-card h2 {font-size: 1.5rem;margin-bottom: .5rem;font-weight: 600;}
 .pokemon-card img {width: 120px;height: 120px;}
+
+.type {display: inline-block;color: #fff;text-shadow: 1px 1px 2px rgba(0,0,0,.7);width: 66px;line-height: 1.7;border-radius: 4px;border: 1px solid;}
+.type-normal {background-color: #aa9}
+.type-fire {background-color: #f42}
+.type-water {background-color: #39f}
+.type-electric {background-color: #fc3}
+.type-grass {background-color: #7c5}
+.type-ice {background-color: #6cf}
+.type-fighting {background-color: #b54}
+.type-poison {background-color: #a59}
+.type-ground {background-color: #db5}
+.type-flying {background-color: #89f}
+.type-psychic {background-color: #f59}
+.type-bug {background-color: #ab2}
+.type-rock {background-color: #ba6}
+.type-ghost {background-color: #66b}
+.type-dragon {background-color: #76e}
+.type-dark {background-color: #754}
+.type-steel {background-color: #aab}
+.type-fairy {background-color: #e9e}

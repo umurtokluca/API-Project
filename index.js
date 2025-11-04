@@ -6,18 +6,16 @@ const port = 3000;
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true })); // for POST form data
+app.use(express.urlencoded({ extended: true }));
 
-let cards = []; // store up to 6 Pokémon
+let cards = [];
 
-// --- Main route ---
 app.get("/", async (req, res) => {
   const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=494");
   const names = result.data.results.map(p => p.name);
   res.render("index", { names, cards });
 });
 
-// --- Fetch Pokémon and show it ---
 app.post("/add", async (req, res) => {
   const name = req.body.pokemon;
 
@@ -34,7 +32,18 @@ app.post("/add", async (req, res) => {
     const type2 = data.types[1]?.type?.name || "";
     const sprite = data.sprites?.front_default || "";
 
-    const newCard = { name: data.name, type: type1, type2, sprite };
+    const abilities = data.abilities.map(a => ({
+      name: a?.ability?.name || "",
+      hidden: a?.is_hidden || false
+    }));
+
+    const newCard = {
+      name: data.name,
+      type: type1,
+      type2,
+      sprite,
+      abilities
+    };
     cards.push(newCard);
   } catch (err) {
     console.error("Error fetching Pokémon:", err.message);
@@ -43,7 +52,6 @@ app.post("/add", async (req, res) => {
   res.redirect("/");
 });
 
-// --- Clear cards (optional reset route) ---
 app.post("/clear", (req, res) => {
   cards = [];
   res.redirect("/");
@@ -53,7 +61,7 @@ app.post("/clear-self", (req, res) => {
   const index = parseInt(req.body.index);
 
   if (!isNaN(index) && index >= 0 && index < cards.length) {
-    cards.splice(index, 1); // remove only that card
+    cards.splice(index, 1);
   }
 
   res.redirect("/");

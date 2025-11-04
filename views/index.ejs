@@ -44,6 +44,15 @@
                     <div>
                         <img src="<%= card.sprite %>" alt="<%= card.name %>">
                     </div>
+                    <div class="pokemon-ability">
+                        <h3>Abilities</h3>
+                        <% card.abilities.forEach(a => { %>
+                            <div>
+                            <%= a.name.charAt(0).toUpperCase() + a.name.slice(1) %>
+                            <% if (a.hidden) { %>(Hidden)<% } %>
+                            </div>
+                        <% }) %>
+                    </div>
                     <form action="/clear-self" method="POST" style="margin-top: 10px;">
                         <input type="hidden" name="index" value="<%= index %>">
                         <button class="btn-delete" type="submit">X</button>

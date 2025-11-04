@@ -11,9 +11,14 @@ app.use(express.urlencoded({ extended: true }));
 let cards = [];
 
 app.get("/", async (req, res) => {
-  const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=494");
-  const names = result.data.results.map(p => p.name);
-  res.render("index", { names, cards });
+  try {
+    const result = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=494");
+    const names = Array.isArray(result.data.results) ? result.data.results.map(p => p.name) : [];
+    res.render("index", { names, cards });
+  } catch (err) {
+    console.error("Error fetching Pokémon list:", err.message);
+    res.render("index", { names: [], cards });
+  }
 });
 
 app.post("/add", async (req, res) => {
@@ -23,6 +28,9 @@ app.post("/add", async (req, res) => {
 
   // Limit to 6
   if (cards.length >= 6) return res.redirect("/");
+
+  // prevent duplicate cards
+  //if (cards.some(c => c.name === name)) return res.redirect("/");
 
   try {
     const result = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
@@ -67,4 +75,4 @@ app.post("/clear-self", (req, res) => {
   res.redirect("/");
 });
 
-app.listen(3000, () => console.log("Server running at http://localhost:3000"));
+app.listen(port, () => console.log(`Server running at http://localhost:${port}`));
